@@ -1,5 +1,15 @@
+import { logoutApi } from "../api/authApi";
+
 const HomePage = () => {
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    try {
+      if (refreshToken) {
+        await logoutApi(refreshToken);
+      }
+    } catch {
+      // dù API lỗi vẫn cứ logout ở phía client
+    }
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     window.location.href = "/login";

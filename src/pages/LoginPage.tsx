@@ -130,7 +130,7 @@ export default function SignInPage() {
         {/* Links */}
         <div className="flex justify-between text-xs">
           <a
-            href="#"
+            href="/forgot-password"
             className="underline text-neutral-700 font-bold hover:text-neutral-900"
           >
             Forgot password

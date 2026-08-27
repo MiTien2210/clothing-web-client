@@ -22,3 +22,19 @@ export const resendOtpApi = (email: string) => {
 export const loginApi = (email: string, password: string) => {
   return axiosClient.post("/account/login", { email, password });
 };
+
+export const logoutApi = (refreshToken: string) => {
+  return axiosClient.post("/account/logout", { refreshToken });
+};
+
+export const forgotPasswordApi = (email: string) => {
+  return axiosClient.post("/account/forgot-password", { email });
+};
+
+export const resetPasswordApi = (payload: {
+  email: string;
+  otp: string;
+  newPassword: string;
+}) => {
+  return axiosClient.post("/account/reset-password", payload);
+};
