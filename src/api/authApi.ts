@@ -1,11 +1,5 @@
+import type { RegisterPayload, UserProfile } from "../types/user";
 import axiosClient from "./axiosClient";
-
-export interface RegisterPayload {
-  full_name: string;
-  email: string;
-  phone?: string;
-  password: string;
-}
 
 export const registerApi = (payload: RegisterPayload) => {
   return axiosClient.post("/account/register", payload);
@@ -37,4 +31,15 @@ export const resetPasswordApi = (payload: {
   newPassword: string;
 }) => {
   return axiosClient.post("/account/reset-password", payload);
+};
+
+export const getMeApi = () => {
+  return axiosClient.get("/account/me");
+};
+
+export const updateProfileApi = (payload: {
+  full_name?: string;
+  phone?: string;
+}) => {
+  return axiosClient.patch<UserProfile>("/account/me", payload);
 };
