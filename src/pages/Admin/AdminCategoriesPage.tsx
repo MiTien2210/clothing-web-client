@@ -137,9 +137,7 @@ const AdminCategoriesPage = () => {
       {/* Stats */}
       <div className="grid grid-cols-1 xs:grid-cols-3 sm:grid-cols-3 gap-3.5 mb-6">
         <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3.5">
-          <p className="font-serif text-2xl leading-none">
-            {flatList.length}
-          </p>
+          <p className="font-serif text-2xl leading-none">{flatList.length}</p>
           <p className="text-xs text-neutral-400 mt-1.5">Total categories</p>
         </div>
         <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3.5">
@@ -160,9 +158,7 @@ const AdminCategoriesPage = () => {
           className="flex flex-col md:flex-row gap-3 md:items-end"
         >
           <div className="flex-1 min-w-0">
-            <label className="block text-xs text-neutral-400 mb-1">
-              Name
-            </label>
+            <label className="block text-xs text-neutral-400 mb-1">Name</label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}

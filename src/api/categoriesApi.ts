@@ -22,3 +22,7 @@ export const updateCategoryApi = (
 export const deleteCategoryApi = (id: string) => {
   return axiosClient.delete(`/categories/${id}`);
 };
+
+export const getCategoryByIdApi = (id: string) => {
+  return axiosClient.get<Category>(`/categories/${id}`);
+};

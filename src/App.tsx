@@ -12,12 +12,14 @@ import AdminLayout from "./layouts/AdminLayout";
 import AdminCategoriesPage from "./pages/Admin/AdminCategoriesPage";
 import AdminProductsPage from "./pages/Admin/AdminProductsPage";
 import AdminProductVariantsPage from "./pages/Admin/AdminProductVariantsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import CategoryPage from "./pages/CategoryPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
     <Routes>
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
 
@@ -32,11 +34,15 @@ function App() {
         </Route>
       </Route>
 
+      <Route path="/" element={<HomePage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/verify-otp" element={<VerifyOtpPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/products/:id" element={<ProductDetailPage />} />
+      <Route path="/categories/:id" element={<CategoryPage />} />
+      <Route path="/search" element={<SearchPage />} />
     </Routes>
   );
 }

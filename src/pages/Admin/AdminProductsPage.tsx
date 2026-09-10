@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { CaretDownIcon, PencilSimpleIcon, TrashIcon, TShirtIcon } from "@phosphor-icons/react";
+import {
+  CaretDownIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+  TShirtIcon,
+} from "@phosphor-icons/react";
 import {
   getProductsApi,
   createProductApi,
@@ -55,8 +60,8 @@ const AdminProductsPage = () => {
   }
 
   const loadProducts = async () => {
-    const res = await getProductsApi();
-    setProducts(res.data);
+    const res = await getProductsApi({ limit: 100 });
+    setProducts(res.data.data);
   };
 
   const loadCategories = async () => {
@@ -170,15 +175,11 @@ const AdminProductsPage = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3.5 mb-6">
         <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3.5">
-          <p className="font-serif text-2xl leading-none">
-            {products.length}
-          </p>
+          <p className="font-serif text-2xl leading-none">{products.length}</p>
           <p className="text-xs text-neutral-400 mt-1.5">Total products</p>
         </div>
         <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3.5">
-          <p className="font-serif text-2xl leading-none">
-            {categoriesInUse}
-          </p>
+          <p className="font-serif text-2xl leading-none">{categoriesInUse}</p>
           <p className="text-xs text-neutral-400 mt-1.5">Categories in use</p>
         </div>
       </div>
@@ -194,9 +195,7 @@ const AdminProductsPage = () => {
               </label>
               <input
                 value={form.name}
-                onChange={(e) =>
-                  setForm({ ...form, name: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full h-9 px-3 border border-neutral-300 rounded-lg text-sm outline-none focus:border-black transition-colors"
                 required
               />
@@ -237,9 +236,7 @@ const AdminProductsPage = () => {
               </label>
               <input
                 value={form.material}
-                onChange={(e) =>
-                  setForm({ ...form, material: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, material: e.target.value })}
                 className="w-full h-9 px-3 border border-neutral-300 rounded-lg text-sm outline-none focus:border-black transition-colors"
               />
             </div>
@@ -363,9 +360,7 @@ const AdminProductsPage = () => {
       >
         <form onSubmit={handleEditSubmit}>
           <div className="mb-3">
-            <label className="block text-xs text-neutral-400 mb-1">
-              Name
-            </label>
+            <label className="block text-xs text-neutral-400 mb-1">Name</label>
             <input
               value={editForm.name}
               onChange={(e) =>

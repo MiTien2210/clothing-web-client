@@ -1,4 +1,5 @@
 import type { Category } from "./category";
+import type { ProductVariant } from "./product-variant";
 
 export interface Product {
   id: string;
@@ -7,6 +8,7 @@ export interface Product {
   material: string | null;
   care_instructions: string | null;
   category: Category;
+  variants: ProductVariant[];
   created_at: string;
   updated_at: string;
 }

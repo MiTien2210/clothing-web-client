@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { CaretDownIcon, PencilSimpleIcon, TrashIcon, StackIcon } from "@phosphor-icons/react";
+import {
+  CaretDownIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+  StackIcon,
+} from "@phosphor-icons/react";
 import {
   getProductVariantsApi,
   createProductVariantApi,
@@ -52,8 +57,8 @@ const AdminProductVariantsPage = () => {
   };
 
   const loadProducts = async () => {
-    const res = await getProductsApi();
-    setProducts(res.data);
+    const res = await getProductsApi({ limit: 100 });
+    setProducts(res.data.data);
   };
 
   useEffect(() => {
@@ -63,9 +68,7 @@ const AdminProductVariantsPage = () => {
     );
   }, []);
 
-  const outOfStockCount = variants.filter(
-    (v) => v.stock_quantity === 0,
-  ).length;
+  const outOfStockCount = variants.filter((v) => v.stock_quantity === 0).length;
 
   const handleCreateVariant = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -166,15 +169,11 @@ const AdminProductVariantsPage = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3.5 mb-6">
         <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3.5">
-          <p className="font-serif text-2xl leading-none">
-            {variants.length}
-          </p>
+          <p className="font-serif text-2xl leading-none">{variants.length}</p>
           <p className="text-xs text-neutral-400 mt-1.5">Total variants</p>
         </div>
         <div className="bg-white border border-neutral-200 rounded-xl px-4 py-3.5">
-          <p className="font-serif text-2xl leading-none">
-            {outOfStockCount}
-          </p>
+          <p className="font-serif text-2xl leading-none">{outOfStockCount}</p>
           <p className="text-xs text-neutral-400 mt-1.5">Out of stock</p>
         </div>
       </div>
@@ -270,9 +269,7 @@ const AdminProductVariantsPage = () => {
             </div>
 
             <div className="flex-1 min-w-0">
-              <label className="block text-xs text-neutral-400 mb-1">
-                SKU
-              </label>
+              <label className="block text-xs text-neutral-400 mb-1">SKU</label>
               <input
                 value={form.sku}
                 onChange={(e) => setForm({ ...form, sku: e.target.value })}
@@ -479,9 +476,7 @@ const AdminProductVariantsPage = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-xs text-neutral-400 mb-1">
-              SKU
-            </label>
+            <label className="block text-xs text-neutral-400 mb-1">SKU</label>
             <input
               value={editForm.sku}
               onChange={(e) =>
