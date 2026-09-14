@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { getProductByIdApi, getRelatedProductsApi } from "../api/productsApi";
 import type { Product } from "../types/product";
+import { addCartItemApi } from "../api/cartApi";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [addMessage, setAddMessage] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -53,6 +58,29 @@ const ProductDetailPage = () => {
   const selectedVariant = product.variants.find(
     (v) => v.size === selectedSize && v.color === selectedColor,
   );
+
+  const handleAddToCart = async () => {
+    if (!selectedVariant) return;
+    setAddMessage("");
+
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+      return;
+    }
+
+    setAddingToCart(true);
+    try {
+      await addCartItemApi({
+        productVariantId: selectedVariant.id,
+        quantity,
+      });
+      setAddMessage("Added to cart");
+    } catch {
+      setAddMessage("Failed to add to cart");
+    } finally {
+      setAddingToCart(false);
+    }
+  };
 
   return (
     <div className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-6 md:py-8">
@@ -139,13 +167,25 @@ const ProductDetailPage = () => {
             </p>
           )}
 
-          <div className="flex gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <input
+              type="number"
+              min={1}
+              max={selectedVariant?.stock_quantity ?? 1}
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              className="w-16 h-11 px-3 border border-neutral-300 rounded-lg text-sm outline-none focus:border-black transition-colors"
+            />
             <button
-              disabled
-              title="Coming soon"
-              className="flex-1 h-11 bg-black text-white rounded-lg text-sm font-medium disabled:opacity-40"
+              onClick={handleAddToCart}
+              disabled={
+                !selectedVariant ||
+                selectedVariant.stock_quantity === 0 ||
+                addingToCart
+              }
+              className="flex-1 h-11 bg-black text-white rounded-lg text-sm font-medium disabled:opacity-40 hover:bg-neutral-800 transition-colors"
             >
-              Add to cart
+              {addingToCart ? "Adding..." : "Add to cart"}
             </button>
             <button
               disabled
@@ -155,6 +195,9 @@ const ProductDetailPage = () => {
               Wishlist
             </button>
           </div>
+          {addMessage && (
+            <p className="text-xs text-neutral-500 mb-6">{addMessage}</p>
+          )}
 
           {product.material && (
             <p className="text-xs text-neutral-400">
