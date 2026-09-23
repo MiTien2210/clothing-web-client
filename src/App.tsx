@@ -11,11 +11,12 @@ import AdminLayout from "./layouts/AdminLayout";
 import AdminCategoriesPage from "./pages/Admin/AdminCategoriesPage";
 import AdminProductsPage from "./pages/Admin/AdminProductsPage";
 import AdminProductVariantsPage from "./pages/Admin/AdminProductVariantsPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
+import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 import CategoryPage from "./pages/CategoryPage";
 import SearchPage from "./pages/SearchPage";
 import PublicLayout from "./layouts/PublicLayout";
 import HomePage from "./pages/HomePage/HomePage";
+import CartPage from "./pages/CartPage/CartPage";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<ProfilePage />} />
-          {/* <Route path="/cart" element={<CartPage />} /> */}
+          <Route path="/cart" element={<CartPage />} />
         </Route>
       </Route>
 
